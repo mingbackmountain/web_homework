@@ -1,28 +1,74 @@
-const work = [45, 46, 78, 87, 39, 93, 56];
-const love = [32, 24, 62, 36, 63, 69, 96];
-const wealth = [28, 82, 45, 54, 65, 56, 78];
-const merchan = [44, 22, 41, 16, 61, 26, 42];
-const tech = [98, 89, 99, 59, 95, 91, 19];
-const edu = [15, 51, 14, 41, 55, 39, 23];
-let randnum = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+let work = ["45", "46", "78", "87", "39", "93", "56"];
+let love = ["32", "24", "62", "36", "63", "69", "96"];
+let wealth = ["28", "82", "45", "54", "65", "56", "78"];
+let merchan = ["44", "22", "41", "16", "61", "26", "42"];
+let tech = ["98", "89", "99", "59", "95", "91", "19"];
+let edu = ["15", "51", "14", "41", "55", "39", "23"];
 
-const output = document.getElementById("output").value;
-const startnum = document.getElementById("inputGroup1").value;
-const category = document.getElementById("inputGroup2").value;
-const notnum = document.getElementById("inputGroup3").value;
+let randnum = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+let output = document.getElementById("output");
+let startnum = document.getElementById("inputGroup1");
+let category = document.getElementById("inputGroup2");
+let notnum = document.getElementById("inputGroup3");
+
+function generate() {
+  output.value = generateNumber(startnum, category, notnum);
+}
 
 function generateNumber(startnum, category, notnum) {
-  let result = startnum;
-  for (let i = 0; i < randnum.length; i++) {
-    if (randnum[i] == notnum) {
-      randnum.pop(randnum[i]);
-    }
+  let lucky;
+  randnum = deleteNotNum(notnum);
+  work = deleteLuckyNotNum(notnum, work);
+  love = deleteLuckyNotNum(notnum, love);
+  wealth = deleteLuckyNotNum(notnum, wealth);
+  merchan = deleteLuckyNotNum(notnum, merchan);
+  tech = deleteLuckyNotNum(notnum, tech);
+  edu = deleteLuckyNotNum(notnum, edu);
+  if (category.value == "Work") {
+    lucky = randomnumber(work, startnum, randnum);
+  } else if (category.value == "Love") {
+    lucky = randomnumber(love, startnum, randnum);
+  } else if (category.value == "Wealth") {
+    lucky = randomnumber(wealth, startnum, randnum);
+  } else if (category.value == "Merchandising") {
+    lucky = randomnumber(merchan, startnum, randnum);
+  } else if (category.value == "Technology") {
+    lucky = randomnumber(tech, startnum, randnum);
+  } else if (category.value == "Education/Wiseness") {
+    lucky = randomnumber(edu, startnum, randnum);
   }
-  if (category == "Work") {
-  } else if (category == "Love") {
-  } else if (category == "Wealth") {
-  } else if (category == "Merchandising") {
-  } else if (category == "Technology") {
-  } else if (category == "Education/Wiseness") {
+  return lucky;
+}
+
+function randomnumber(category_arr, startnum, randnum) {
+  let result = startnum.value;
+  let luckynum = category_arr[Math.floor(Math.random() * category_arr.length)];
+  result += luckynum;
+  for (let i = 0; i < 5; i++) {
+    result += randnum[Math.floor(Math.random() * 8)];
   }
+  return result.trim();
+}
+
+function sumofDigit(result) {
+  let str = result.toString();
+  sum = 0;
+  for (let i = 0; i < str.length; i++) {
+    sum += parseInt(str.charAt(i), 10);
+  }
+  return sum;
+}
+
+function deleteNotNum(notnum) {
+  const result = randnum.filter((num) => {
+    return num != notnum.value;
+  });
+  return result;
+}
+
+function deleteLuckyNotNum(notnum, category_arr) {
+  const result = category_arr.filter((num) => {
+    return num.charAt(0) != notnum.value && num.charAt(1) != notnum.value;
+  });
+  return result;
 }
