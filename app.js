@@ -11,8 +11,73 @@ let startnum = document.getElementById("inputGroup1");
 let category = document.getElementById("inputGroup2");
 let notnum = document.getElementById("inputGroup3");
 
-function generate() {
+function generateNormal() {
   output.value = generateNumber(startnum, category, notnum);
+}
+
+function generateExtra() {
+  if (category.value == "Work") {
+    let test = findluck(work);
+    if (test == 0) {
+      alert("Lucky number is not ready please press again");
+    } else {
+      alert("Lucky number is found");
+      output.value = test;
+    }
+  } else if (category.value == "Love") {
+    let test = findluck(love);
+    if (test == 0) {
+      alert("Lucky number is not ready please press again");
+    } else {
+      alert("Lucky number is found");
+      output.value = test;
+    }
+  } else if (category.value == "Wealth") {
+    let test = findluck(wealth);
+    if (test == 0) {
+      alert("Lucky number is not ready please press again");
+    } else {
+      alert("Lucky number is found");
+      output.value = test;
+    }
+  } else if (category.value == "Merchandising") {
+    let test = findluck(merchan);
+    if (test == 0) {
+      alert("Lucky number is not ready please press again");
+    } else {
+      alert("Lucky number is found");
+      output.value = test;
+    }
+  } else if (category.value == "Technology") {
+    let test = findluck(tech);
+    if (test == 0) {
+      alert("Lucky number is not ready please press again");
+    } else {
+      alert("Lucky number is found");
+      output.value = test;
+    }
+  } else if (category.value == "Education/Wiseness") {
+    let test = findluck(edu);
+    if (test == 0) {
+      alert("Lucky number is not ready please press again");
+    } else {
+      alert("Lucky number is found");
+      output.value = test;
+    }
+  }
+}
+
+function findluck(category_arr) {
+  let temp = generateNumber(startnum, category, notnum);
+  let result = 0;
+  for (let i = 0; i < category_arr.length; i++) {
+    if (sumofDigit(temp) == category_arr[i]) {
+      result = temp;
+    } else {
+      temp = generateNumber(startnum, category, notnum);
+    }
+  }
+  return result;
 }
 
 function generateNumber(startnum, category, notnum) {
@@ -45,7 +110,7 @@ function randomnumber(category_arr, startnum, randnum) {
   let luckynum = category_arr[Math.floor(Math.random() * category_arr.length)];
   result += luckynum;
   for (let i = 0; i < 5; i++) {
-    result += randnum[Math.floor(Math.random() * 8)];
+    result += randnum[Math.floor(Math.random() * randnum.length)];
   }
   return result.trim();
 }
